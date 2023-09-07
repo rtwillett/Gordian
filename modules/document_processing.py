@@ -14,8 +14,8 @@ class DataFrameGraphProcessing:
         self.source_col = source
         self.sink_col = sink
         self.label = label
-        self.min_deg = min_deg
-        self.max_deg = max_deg
+        # self.min_deg = min_deg
+        # self.max_deg = max_deg
         
 
     def df_to_edgelist(self): 
@@ -37,15 +37,6 @@ class DataFrameGraphProcessing:
         self.EDGELIST[self.source_col] = self.EDGELIST[self.source_col].map(id_map)
         self.EDGELIST[self.sink_col] = self.EDGELIST[self.sink_col].map(id_map)
 
-    def build_graph(self): 
-        self.g = nx.Graph()
-
-        [self.g.add_node(n) for n in self.NODELIST.id]
-        [self.g.add_edge(i[0], i[1])  for i in list(zip(self.EDGELIST[self.source_col].tolist(), self.EDGELIST[self.sink_col].tolist()))]
-
-        self.n_nodes = len(self.g.nodes)
-    
-        return None
     
     def write_csv(self, filename, sep = ","):
         self.EDGELIST.to_csv(f'./{filename}_el.csv', index=None, sep = sep)
@@ -65,7 +56,37 @@ class DataFrameGraphProcessing:
 
     def write_gml(self): 
         pass
+
+class GraphBuilder:
+
+    def __init__(self, data, min_deg = None, max_deg = None):
+        self.data = data
+        self.min_deg = min_deg
+        self.max_deg = max_deg
+
+
+        if self.data.source_col is None:
+            self.data.source_col = "source"
+        # else: 
+        #     self.source_col = "source"
+
+        if self.data.target_col is None:
+            self.data.target_col = "target"
+        # else: 
+        #     self.target_col = "target"
+            
+
+    def build_graph(self): 
+        self.g = nx.Graph()
+
+        [self.g.add_node(n) for n in self.data.NODELIST.id]
+        [self.g.add_edge(i[0], i[1])  for i in list(zip(self.data.EDGELIST[self.data.source_col].tolist(), self.data.EDGELIST[self.data.target_col].tolist()))]
+
+        self.n_nodes = len(self.g.nodes)
     
+        return None
+    
+
     def calculate_centrality(self):
         deg = nx.degree_centrality(self.g)
         closeness = nx.closeness_centrality(self.g)
