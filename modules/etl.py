@@ -12,7 +12,7 @@ class DocumentOpener:
 
         self.FILEPATH = filepath
         self.source_col = source
-        self.sink_col = sink
+        self.target_col = sink
         self.label_col = label
 
         self.detect_filetype()
@@ -33,14 +33,17 @@ class DocumentOpener:
         
         self.df = open_func[self.file_ext]()
 
-        if self.source_col is not None and self.sink_col is not None:
-            if self.file_ext in ["csv", "xlsx"]:
-                self.df_to_edgelist(source = self.source_col, sink = self.sink_col)
-            else: 
-                pass
+        if self.file_ext not in ["csv", "xlsx"]:
+            pass
         else:
-            raise Exception("Need to define a source and sink column")
-        
+            if self.source_col is not None and self.target_col is not None:
+            #     # if self.file_ext in ["csv", "xlsx"]:
+                self.df_to_edgelist(source = self.source_col, sink = self.target_col)
+            #     else: 
+            #         pass
+            else:
+                raise Exception("Need to define a source and sink column")
+
     def read_csv(self, sep = ","):
         return pd.read_csv(self.FILEPATH)
     
@@ -137,3 +140,10 @@ class GMLReader:
         val_ptn = "value\s+([A-Za-z0-9]{1,})?"
 
         return (self.extract_value(source_ptn, s), self.extract_value(target_ptn, s), self.extract_value(val_ptn, s))
+    
+class GMLWriter:
+
+    def __init__(self):
+        pass
+
+    
