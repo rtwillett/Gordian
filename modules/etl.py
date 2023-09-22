@@ -6,7 +6,7 @@ import json
 import matplotlib.pyplot as plt
 from .document_processing import DataFrameGraphProcessing
 
-class DocumentOpener:
+class DocumentReader:
 
     def __init__(self, filepath, source = None, sink = None, label = None):
 
@@ -75,7 +75,40 @@ class DocumentOpener:
 
         self.NODELIST = processor.NODELIST
         self.EDGELIST = processor.EDGELIST
+        
+        try:
+            gmlw = GMLWriter(self)
+            self.gml = gmlw.df_to_gml()
+        except:
+            raise Exception("The GML structure could not be created")
+        
+    def save_gml(self):
+        
+        if self.gml is not None:
+            f = open("test_gml.gml", "w")
+            f.write(self.gml)
+            f.close()
+        else:
+            raise Exception("There is no GML data available to save")
+        
+    def write_csv(self, filename, sep = ","):
+        self.EDGELIST.to_csv(f'./{filename}_el.csv', index=None, sep = sep)
+        self.NODELIST.to_csv(f'./{filename}_nl.csv', index=None, sep = sep)
+    
+    def write_excel(self, filename): 
+        self.EDGELIST.to_excel(f'./{filename}_el.xlsx', index=None)
+        self.NODELIST.to_excel(f'./{filename}_nl.xlsx', index=None)
+    
+    def to_json(self):
+        import json
+        
+        return json.load(self.FILEPATH)
+    
+    def write_gephi(self):
+        pass 
 
+    def write_gml(self): 
+        pass
 
 class GMLReader:
     
@@ -143,7 +176,21 @@ class GMLReader:
     
 class GMLWriter:
 
-    def __init__(self):
-        pass
+    def __init__(self, reader):
+        self.reader = reader
 
+    def make_gml_nodes(self):
+        tt = self.reader.NODELIST.apply(lambda x: f"""node\n  [\n    id {x['id']}\n    label "{x['label']}"\n  ]\n""", axis=1).to_list()
+    #     return "graph\n[\n" + "".join([f"  {i}" for i in tt]) + "]"
+        return "".join([f"  {i}" for i in tt])
+
+    def make_gml_edges(self):
+        tt = self.reader.EDGELIST.apply(lambda x: f"""edge\n  [\n    source {x[self.reader.source_col]}\n    target {x[self.reader.target_col]}\n  ]\n""", axis=1).to_list()
+    #     return "graph\n[\n" + "".join([f"  {i}" for i in tt]) + "]"
+        return "".join([f"  {i}" for i in tt])
     
+    def df_to_gml(self):
+        gml_nodes = self.make_gml_nodes()
+        gml_edges = self.make_gml_edges()
+        
+        return "graph\n[\n" + gml_nodes + gml_edges + "]"

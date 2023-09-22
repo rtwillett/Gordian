@@ -37,25 +37,6 @@ class DataFrameGraphProcessing:
         self.EDGELIST[self.source_col] = self.EDGELIST[self.source_col].map(id_map)
         self.EDGELIST[self.sink_col] = self.EDGELIST[self.sink_col].map(id_map)
 
-    
-    def write_csv(self, filename, sep = ","):
-        self.EDGELIST.to_csv(f'./{filename}_el.csv', index=None, sep = sep)
-        self.NODELIST.to_csv(f'./{filename}_nl.csv', index=None, sep = sep)
-    
-    def write_excel(self, filename): 
-        self.EDGELIST.to_excel(f'./{filename}_el.csv', index=None)
-        self.NODELIST.to_excel(f'./{filename}_nl.csv', index=None)
-    
-    def to_json(self):
-        import json
-        
-        return json.load(self.FILEPATH)
-    
-    def write_gephi(self):
-        pass 
-
-    def write_gml(self): 
-        pass
 
 class GraphBuilder:
 
