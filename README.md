@@ -2,7 +2,7 @@
 
 ## Original Team Members
 - Eric Brichetto (aka BUTTS)
-- Ryan Willett (aka MITH)
+- Ryan Willett (aka Mith)
 - John Rodley (aka T-REX)
 
 
@@ -17,7 +17,7 @@ pip install git+ssh://git@github.com/rtwillett/Gordian.git
 ## CLI Usage
 Description
 
-## Furture Directions
+## Future Directions
 - Separating I/O file reading functionality from graph analysis and graph data visualization
 - Convert all I/O files (Excel, CSV, GML, etc) to GML for standardization of graph representation and edgelist/nodelist for exports to more human readable formats.
 - Provide convenient means to filter graphs, show graph outputs, and save useful file outputs.
