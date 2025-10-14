@@ -1,4 +1,4 @@
-# Gordian - Untangling the Gordian knot of OSint
+# Gordian - Untangling the Gordian Knot of OSint
 
 ## Original Team Members
 - Eric Brichetto (aka BUTTS)
@@ -10,7 +10,9 @@
 Originally written as a graph analysis and file conversion tool as part of the 1st Bellingcat Hackathon. This fork is refactoring and expanding the code into a more robust CLI based tool and graph toolkit module for data science workflows.
 
 ## Installation
-Coming soon
+```
+pip install git+ssh://git@github.com/rtwillett/Gordian.git
+```
 
 ## CLI Usage
 Description
