@@ -1,0 +1,29 @@
+[build-system]
+# Use setuptools backend (works well for broad compatibility with pip)
+requires = [
+    "argparse",
+    "setuptools>=61.0", 
+    "wheel",
+    "networkx",
+    "numpy",
+    "pandas",
+    "matplotlib"
+    ]
+build-backend = "setuptools.build_meta"
+
+[project]                     # PEP 621 metadata
+name = "Gordion"
+version = "0.1.0"
+description = "Tools for DS project development"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+  { name = "Ryan Willett", email = "ryan.willett@gmail.com" }
+]
+license = { text = "MIT" }   # or use license-file = "LICENSE"
+keywords = ["audio", "missingness", "dataframe"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent"
+]
