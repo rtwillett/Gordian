@@ -12,7 +12,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]                     # PEP 621 metadata
-name = "Gordion"
+name = "Gordian"
 version = "0.1.0"
 description = "Tools for DS project development"
 readme = "README.md"
